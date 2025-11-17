@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>K. Santhosh — Neon Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+    :root{
+      --bg1:#0b1220; --card:#0f1724; --glass:rgba(255,255,255,0.03);
+      --accent1:#27a3ff; --accent2:#8b5cf6; --accent3:#7c3aed;
+    }
+    *{box-sizing:border-box}
+    body{font-family:'Inter',system-ui, -apple-system, 'Segoe UI', Roboto, Arial; margin:0; background:radial-gradient(800px 400px at 50% 10%, rgba(124,58,237,0.12), transparent), linear-gradient(180deg,var(--bg1), #05060a); color:#dfe7ff}
+    .container{max-width:1100px;margin:40px auto;padding:28px}
+
+    /* Hero */
+    .hero{background:linear-gradient(180deg, rgba(124,58,237,0.06), rgba(2,6,23,0.2)); padding:48px; border-radius:16px; box-shadow: 0 8px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02); position:relative; overflow:visible}
+    .hero-top{display:flex;align-items:center;flex-direction:column;gap:18px}
+    .avatar{width:150px;height:150px;border-radius:999px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent1),var(--accent2));padding:6px;box-shadow:0 6px 30px rgba(124,58,237,0.25)}
+    .avatar-inner{width:100%;height:100%;background:linear-gradient(180deg,#0b1220,#111827);border-radius:999px;display:grid;place-items:center;border:6px solid rgba(255,255,255,0.03)}
+    .avatar svg{width:64px;height:64px;color:rgba(255,255,255,0.9)}
+    h1{font-size:32px;margin:0;color:#fff;letter-spacing:1px}
+    .subtitle{color:var(--accent1);font-weight:600}
+    .hero p.lead{max-width:760px;color:rgba(210,220,255,0.7);margin:0}
+
+    /* Buttons */
+    .controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);cursor:pointer;color:#e6eefc}
+    .btn.icon{padding:10px}
+    .btn.primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#061223;box-shadow:0 8px 24px rgba(39,163,255,0.14)}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+
+    /* Tabs */
+    .tabs{margin-top:26px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); padding:10px;border-radius:12px;display:flex;gap:8px;justify-content:center}
+    .tab{padding:10px 16px;border-radius:999px;background:transparent;color:#bcd3ff;border:1px solid transparent;cursor:pointer}
+    .tab.active{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#061223;box-shadow:0 8px 28px rgba(124,58,237,0.12)}
+
+    /* Content area */
+    .panel{margin-top:22px;padding:22px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.03)}
+    .grid-2{display:grid;grid-template-columns:1fr 380px;gap:18px}
+    @media(max-width:900px){.grid-2{grid-template-columns:1fr}.avatar{width:120px;height:120px}}
+
+    /* Profile card */
+    .profile-card{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
+    .pills{display:flex;flex-wrap:wrap;gap:10px}
+    .pill{padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);font-size:13px}
+
+    /* Skill bars stylish */
+    .skill{margin-bottom:14px}
+    .skill .label{display:flex;justify-content:space-between;font-size:13px;color:#cfe1ff}
+    .bar{height:12px;background:rgba(255,255,255,0.03);border-radius:999px;margin-top:8px;overflow:hidden}
+    .bar > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 6px 18px rgba(124,58,237,0.12);width:0%;transition:width 1.2s cubic-bezier(.2,.9,.2,1)}
+
+    /* Project cards */
+    .projects{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .proj{padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(10,10,20,0.3), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+    @media(max-width:760px){.projects{grid-template-columns:1fr}}
+
+    /* Certificates */
+    .cert-grid{display:flex;flex-direction:column;gap:12px}
+    .cert{display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)}
+    .cert .logo{width:56px;height:56px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(90deg,var(--accent1),var(--accent2))}
+
+    /* subtle bottom star */
+    .corner-decor{position:fixed;right:24px;bottom:24px;opacity:0.08}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.8);z-index:60}
+    .modal.open{display:flex}
+    .modal img{max-width:86vw;max-height:86vh;border-radius:8px}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="hero-top">
+        <div class="avatar">
+          <div class="avatar-inner" aria-hidden>
+            <!-- profile icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6 20c0-3.315 2.686-6 6-6s6 2.685 6 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+        </div>
+        <h1>K. SANTHOSH</h1>
+        <div class="subtitle">AI & Data Science Engineer</div>
+        <p class="lead">B.Tech student with hands-on experience in frontend development and AI fundamentals. I build clean UIs and experiment with ML prototypes. Seeking internships and projects where I can make an impact.</p>
+
+        <div class="controls" role="group" aria-label="contact">
+          <a class="btn primary" href="mailto:santhoshkarupputhurai@gmail.com"><svg class="lucide" viewBox="0 0 24 24" width="16" height="16"><path d="M3 8l8.5 6L20 8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 6v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>Email Me</a>
+          <a class="btn" href="tel:+916382693880"><svg class="lucide" viewBox="0 0 24 24" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .7 3.05 2 2 0 0 1-.45 2.11L9.91 11.09a16 16 0 0 0 3.9 3.9l1.16-1.16a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 3.05.7A2 2 0 0 1 22 16.92z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>Call Me</a>
+          <button id="downloadCv" class="btn ghost"><svg class="lucide" viewBox="0 0 24 24" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 10l5 5 5-5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 15V3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>Download CV</button>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="sections">
+          <button class="tab active" data-tab="about">About</button>
+          <button class="tab" data-tab="education">Education</button>
+          <button class="tab" data-tab="skills">Skills</button>
+          <button class="tab" data-tab="experience">Experience</button>
+          <button class="tab" data-tab="projects">Projects</button>
+          <button class="tab" data-tab="certificates">Certificates</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div id="about-panel" class="tab-panel">
+          <div class="grid-2">
+            <div>
+              <h3 style="margin:0 0 8px 0;color:#e7f0ff">About Me</h3>
+              <p style="color:rgba(220,230,255,0.75)">I am a B.Tech student specializing in AI & Data Science at Chettinad College. I enjoy building UI with modern frontend tools and experimenting with small AI projects. Currently focusing on frontend excellence and practical ML applications.</p>
+
+              <div style="margin-top:18px" class="profile-card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                  <div>
+                    <div style="font-weight:700;color:#fff">K. Santhosh</div>
+                    <div style="font-size:13px;color:rgba(200,220,255,0.7)">AI & Data Science · Frontend Developer</div>
+                  </div>
+                  <div style="text-align:right;color:rgba(200,220,255,0.6);font-size:13px">Karur, Tamil Nadu<br>20 years</div>
+                </div>
+                <div class="pills">
+                  <div class="pill">Student</div>
+                  <div class="pill">Intern</div>
+                  <div class="pill">Projects: 2+</div>
+                  <div class="pill">Certificates: 2+</div>
+                </div>
+              </div>
+
+            </div>
+
+            <aside>
+              <div class="profile-card">
+                <h4 style="margin:0 0 8px 0;color:#dff">Skills</h4>
+                <div style="margin-top:10px">
+                  <div class="skill"><div class="label"><span>HTML5</span><span>85%</span></div><div class="bar"><i style="width:85%"></i></div></div>
+                  <div class="skill"><div class="label"><span>CSS3</span><span>80%</span></div><div class="bar"><i style="width:80%"></i></div></div>
+                  <div class="skill"><div class="label"><span>JavaScript</span><span>75%</span></div><div class="bar"><i style="width:75%"></i></div></div>
+                  <div class="skill"><div class="label"><span>React</span><span>70%</span></div><div class="bar"><i style="width:70%"></i></div></div>
+                  <div class="skill"><div class="label"><span>Python</span><span>75%</span></div><div class="bar"><i style="width:75%"></i></div></div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <div id="education-panel" class="tab-panel" style="display:none">
+          <h3 style="margin-top:0;color:#e7f0ff">Education</h3>
+          <div style="display:grid;gap:12px">
+            <div class="profile-card">
+              <div style="display:flex;justify-content:space-between"><div><strong>B.Tech — AI & Data Science</strong><div style="font-size:13px;color:rgba(200,220,255,0.7)">Chettinad College of Engineering and Technology</div></div><div style="color:rgba(200,220,255,0.6)">CGPA: 6.29/10 (upto 5th sem)</div></div>
+            </div>
+            <div class="profile-card"><strong>HSC — P.A. Vidhya Bhavan</strong><div style="font-size:13px;color:rgba(200,220,255,0.7)">2022 • 54.16%</div></div>
+            <div class="profile-card"><strong>SSLC — P.A. Vidhya Bhavan</strong><div style="font-size:13px;color:rgba(200,220,255,0.7)">2020 • 55.8%</div></div>
+          </div>
+        </div>
+
+        <div id="skills-panel" class="tab-panel" style="display:none">
+          <h3 style="margin-top:0;color:#e7f0ff">Detailed Skills</h3>
+          <div class="projects">
+            <div class="proj">
+              <h4 style="margin:0 0 6px 0">Frontend</h4>
+              <p style="margin:0;color:rgba(210,220,255,0.75)">HTML, CSS, JavaScript, Responsive Design, Accessibility.</p>
+            </div>
+            <div class="proj">
+              <h4 style="margin:0 0 6px 0">Backend & Data</h4>
+              <p style="margin:0;color:rgba(210,220,255,0.75)">Python, MongoDB, SQL — basics for building full-stack apps.</p>
+            </div>
+            <div class="proj">
+              <h4 style="margin:0 0 6px 0">Libraries</h4>
+              <p style="margin:0;color:rgba(210,220,255,0.75)">React.js, Tailwind, Charting & visualization.</p>
+            </div>
+            <div class="proj">
+              <h4 style="margin:0 0 6px 0">AI Basics</h4>
+              <p style="margin:0;color:rgba(210,220,255,0.75)">Intro to ML concepts, datasets, and practical experimentation.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="experience-panel" class="tab-panel" style="display:none">
+          <h3 style="margin-top:0;color:#e7f0ff">Experience</h3>
+          <div style="display:grid;gap:12px">
+            <div class="profile-card">
+              <strong>Full-Stack Development Intern</strong>
+              <div style="font-size:13px;color:rgba(200,220,255,0.7)">Adroit Technologies Innovative Solutions Pvt Ltd — IBM Educational Career Program</div>
+              <div style="margin-top:8px;color:rgba(210,220,255,0.75)">Aug 2024 - Sep 2024 — Worked on frontend projects, CRUD operations and responsive UI.</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="projects-panel" class="tab-panel" style="display:none">
+          <h3 style="margin-top:0;color:#e7f0ff">Projects</h3>
+          <div class="projects">
+            <div class="proj">
+              <strong>AIR TEXT Animation Website</strong>
+              <p style="margin:6px 0 0;color:rgba(210,220,255,0.75)">Animated text interface using CSS animations and JS timing controls.</p>
+            </div>
+            <div class="proj">
+              <strong>Fashion Store (Frontend)</strong>
+              <p style="margin:6px 0 0;color:rgba(210,220,255,0.75)">Product layouts, filtering UI and form interactions with vanilla JS.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="certificates-panel" class="tab-panel" style="display:none">
+          <h3 style="margin-top:0;color:#e7f0ff">Certificates</h3>
+          <div class="cert-grid">
+            <div class="cert">
+              <div class="logo">IBM</div>
+              <div>
+                <strong>Frontend Technologies</strong>
+                <div style="font-size:13px;color:rgba(200,220,255,0.7)">IBM — Comprehensive frontend training</div>
+                <div style="margin-top:8px;display:flex;gap:8px"><a class="btn" href="https://courses.ibmcep.cognitiveclass.ai/certificates/63d14ae0a2924959910e288156547a74" target="_blank">Validate</a><button class="btn" id="show-ibm">Show Image</button></div>
+              </div>
+            </div>
+            <div class="cert">
+              <div class="logo">AI</div>
+              <div>
+                <strong>Getting Started with AI</strong>
+                <div style="font-size:13px;color:rgba(200,220,255,0.7)">Edunet Foundation — Intro to AI</div>
+                <div style="margin-top:8px"><input id="uploadCert" type="file" accept="image/*" /></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <footer style="margin-top:18px;text-align:center;color:rgba(200,220,255,0.6)">
+      <div style="display:flex;gap:12px;justify-content:center;margin-bottom:8px">
+        <a href="#" aria-label="github" class="btn">GitHub</a>
+        <a href="#" aria-label="linkedin" class="btn">LinkedIn</a>
+        <a href="mailto:santhoshkarupputhurai@gmail.com" class="btn">Email</a>
+      </div>
+      <div style="font-size:13px">© 2025 K. Santhosh</div>
+    </footer>
+
+  </div>
+
+  <div id="modal" class="modal" role="dialog" aria-modal="true"><img id="modalImg" src="" alt="certificate"></div>
+
+  <script>
+    lucide.createIcons();
+
+    // Tabs
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.tab-panel');
+    tabs.forEach(tb => tb.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.style.display = 'none');
+      tb.classList.add('active');
+      document.getElementById(tb.dataset.tab + '-panel').style.display = '';
+      // animate skill bars when skills tab visible
+      if(tb.dataset.tab === 'about' || tb.dataset.tab === 'skills') animateBars();
+    }));
+
+    // Animate skill bars
+    function animateBars(){
+      document.querySelectorAll('.bar > i').forEach(el => {
+        const w = el.style.width;
+        el.style.width = '0%';
+        setTimeout(() => el.style.width = w, 60);
+      });
+    }
+    // initial animate
+    animateBars();
+
+    // Download CV (simple HTML)
+    document.getElementById('downloadCv').addEventListener('click', () => {
+      const html = `<!doctype html><meta charset="utf-8"><title>Resume - K. Santhosh</title><style>body{font-family:Inter,Arial;padding:24px;color:#111}h1{margin:0}</style><h1>K. SANTHOSH</h1><p>AI & Data Science | Frontend Developer</p><h2>Contact</h2><p>Email: santhoshkarupputhurai@gmail.com<br>Phone: +91 6382693880</p><h2>Education</h2><ul><li>B.Tech (AI & DS) — CGPA: 6.29/10 upto 5th sem</li><li>HSC — 54.16%</li><li>SSLC — 55.8%</li></ul><h2>Skills</h2><p>HTML, CSS, JavaScript, React, Python, MongoDB</p>`;
+      const blob = new Blob([html], {type:'text/html'});
+      const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='K_SANTHOSH_Resume.html'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1500);
+    });
+
+    // Certificates: placeholder support and upload
+    const placeholders = { ibm: '', ai: '' };
+    document.getElementById('show-ibm').addEventListener('click', () => {
+      if(!placeholders.ibm){ alert('No embedded image. To add, open the HTML and paste a base64 data URI into the placeholders.ibm variable, or upload one using the file input.'); return }
+      document.getElementById('modalImg').src = placeholders.ibm; document.getElementById('modal').classList.add('open');
+    });
+
+    const upload = document.getElementById('uploadCert');
+    upload.addEventListener('change', (e)=>{
+      const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload=()=>{ placeholders.ai=r.result; document.getElementById('modalImg').src = r.result; document.getElementById('modal').classList.add('open') }; r.readAsDataURL(f);
+    });
+
+    // modal close
+    const modal = document.getElementById('modal'); modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.remove('open'); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') modal.classList.remove('open'); });
+
+  </script>
+</body>
+</html>
